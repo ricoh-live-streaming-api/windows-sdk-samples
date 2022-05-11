@@ -41,4 +41,4 @@ Client SDK API の詳細は下記を参照
 
 ## 4. 対応バージョン
 * Unity : 2020.3.14f1
-* windows-unity-sdk : v1.2.0
+* windows-unity-sdk : v1.3.0
