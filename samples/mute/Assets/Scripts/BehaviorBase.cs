@@ -32,6 +32,7 @@ public abstract class BehaviorBase : MonoBehaviour
     public virtual Dictionary<string, object> VideoTrackMetadata { get; protected set; } = new Dictionary<string, object>() { { "video_track_metadata_sample", "video_track_metadata_default" } };
     public virtual MuteType AudioMuteType { get; protected set; } = MuteType.Unmute;
     public virtual MuteType VideoMuteType { get; protected set; } = MuteType.Unmute;
+    public virtual int MaxBitrateKbps => 500;   // priority:normal
     #endregion
 
     public bool IsConnected => client.GetState() != ConnectionState.Idle;
@@ -184,7 +185,8 @@ public abstract class BehaviorBase : MonoBehaviour
                         : SendingVideoOption.VideoCodecType.Vp8;
 
                     var sendingVideoOption = new SendingVideoOption()
-                        .SetCodec(videoCodec);
+                        .SetCodec(videoCodec)
+                        .SetMaxBitrateKbps(MaxBitrateKbps);
 
                     var option = new Option()
                         .SetLocalLSTracks(localLSTracks)

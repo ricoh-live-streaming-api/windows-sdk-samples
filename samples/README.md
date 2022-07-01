@@ -1,15 +1,15 @@
-# Windows Unity Sample
+# SDK の API をそれぞれ用いたサンプル
 
 RICOH Live Streaming Client SDK for Windows を使用した Windows Unity サンプルアプリケーションです。
 
-サービスのご利用には、API利用規約への同意とアカウントの登録、ソフトウェア利用許諾書への同意が必要です。  
+サービスのご利用には、API利用規約への同意とアカウントの登録、ソフトウェア利用許諾書への同意が必要です。
 詳細は下記Webサイトをご確認ください。
 
 * サービスサイト: https://livestreaming.ricoh/
-  * ソフトウェア開発者向けサイト: https://api.livestreaming.ricoh/
+* ソフトウェア開発者向けサイト: https://api.livestreaming.ricoh/
+* アカウント登録: https://livestreaming.ricoh/user_register.html
 * ソフトウェア使用許諾契約書 : [Software License Agreement](../SoftwareLicenseAgreement.txt)
-
-* NOTICE: This package includes SDK and sample application(s) for "RICOH Live Streaming Service".  
+* NOTICE: This package includes SDK and sample application(s) for "RICOH Live Streaming Service".
 At this moment, we provide API license agreement / software license agreement only in Japanese.
 
 ## 事前準備
@@ -38,10 +38,10 @@ At this moment, we provide API license agreement / software license agreement on
 ## サンプル一覧
 サンプルの詳細は各リンク先を参照
 
-| サンプル                   | 概要                                                                    | Scene                | Script              | Client SDK API                                                                                                                              |
-| -------------------------- | ----------------------------------------------------------------------- | -------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| [device](./device)         | カメラ、マイク、スピーカーのデバイス検出と切り替え                      | DeviceSampleScene    | DeviceSample.cs     | Client#ReplaceMediaStreamTrack<br>Client#SetAudioInputDevice<br>Client#SetAudioOutputDevice<br>WindowProcedureHookListener#OnDevicesChanged |
-| [domemaster](./domemaster) | RICOH THETA から受信した360度映像をドームマスター形式に変換して画面出力 | DomemasterScene      | DomemasterSample.cs |                                                                                                                                             |
-| [meta](./meta)             | Connection/Track Metadata 更新通知の送受信                              | MetaSampleScene      | MetaSample.cs       | Client#UpdateMeta<br>Client#UpdateTrackMeta<br>IClientListener#OnUpdateRemoteTrack<br>IClientListener#OnUpdateRemoteConnection              |
-| [mute](./mute)             | ミュート状態の変更とミュート状態更新通知の送受信                        | MetaSampleScene      | MuteSample.cs       | Client#ChangeMute<br>IClientListener#OnUpdateMute                                                                                           |
-| [selective](./selective)   | 相手映像の選択受信設定                                                  | SelectiveSampleScene | SelectiveSample.cs  | Client#ChangeMediaRequirements                                                                                                              |
+| サンプル                 | 概要                                               | Scene                | Script             | Client SDK API                                                                                                                              |
+| ------------------------ | -------------------------------------------------- | -------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| [bitrate](./bitrate)     | Videoの最大送信ビットレートの変更                  | BitrateSampleScene   | BitrateSample.cs   | Client#ChangeVideoSendBitrate                                                                                                               |
+| [device](./device)       | カメラ、マイク、スピーカーのデバイス検出と切り替え | DeviceSampleScene    | DeviceSample.cs    | Client#ReplaceMediaStreamTrack<br>Client#SetAudioInputDevice<br>Client#SetAudioOutputDevice<br>WindowProcedureHookListener#OnDevicesChanged |
+| [meta](./meta)           | Connection/Track Metadata 更新通知の送受信         | MetaSampleScene      | MetaSample.cs      | Client#UpdateMeta<br>Client#UpdateTrackMeta<br>IClientListener#OnUpdateRemoteTrack<br>IClientListener#OnUpdateRemoteConnection              |
+| [mute](./mute)           | ミュート状態の変更とミュート状態更新通知の送受信   | MetaSampleScene      | MuteSample.cs      | Client#ChangeMute<br>IClientListener#OnUpdateMute                                                                                           |
+| [selective](./selective) | 相手映像の選択受信設定                             | SelectiveSampleScene | SelectiveSample.cs | Client#ChangeMediaRequirements                                                                                                              |

@@ -1,4 +1,4 @@
-# Windows Unity PCVR Sample
+# Windows Unity PCVR サンプル
 
 RICOH Live Streaming Client SDK for Windows を使用した Windows Unity PCVR サンプルアプリケーションです。
 
