@@ -10,6 +10,8 @@ public class RoomSpec
     {
         [EnumMember(Value = "sfu")]
         Sfu,
+        [EnumMember(Value = "sfu_large")]
+        SfuLarge,
         [EnumMember(Value = "p2p")]
         P2p,
         [EnumMember(Value = "p2p_turn")]
@@ -28,7 +30,7 @@ public class RoomSpec
         var dic = new Dictionary<string, object>
         {
             ["type"] = type,
-            //["media_control"] = new Dictionary<string, object>() { ["bitrate_reservation_mbps"] = 10 }
+            ["media_control"] = new Dictionary<string, object>() { ["bitrate_reservation_mbps"] = 25 }
         };
 
         return dic;

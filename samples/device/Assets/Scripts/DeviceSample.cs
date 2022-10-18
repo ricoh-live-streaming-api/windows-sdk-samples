@@ -103,6 +103,11 @@ public class DeviceSample : BehaviorBase
         LocalVideoRender.SetTrack(videoTrack);
     }
 
+    protected override void Connect(string _)
+    {
+        base.Connect("WinUnityAPISamplesDevice");
+    }
+
     private class ClientListener : ClientListenerBase
     {
         public ClientListener(DeviceSample app) : base(app)

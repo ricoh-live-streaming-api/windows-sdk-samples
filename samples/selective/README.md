@@ -16,5 +16,5 @@ Client SDK API の詳細は下記を参照
 * [RICOH Live Streaming Client SDK for Windows APIドキュメント](https://github.com/ricoh-live-streaming-api/windows-unity-sdk/tree/main/doc)
 
 ## 4. 対応バージョン
-* Unity : 2020.3.14f1
-* windows-unity-sdk : v1.3.0
+* Unity : 2021.3.11f1
+* windows-unity-sdk : v2.0.0

@@ -8,7 +8,6 @@ public class DomemasterSample : BehaviorBase
 {
     public override string ClientId => "";
     public override string ClientSecret => "";
-    private int BitrateReservationMbps => 25;
 
     public void Start()
     {
@@ -30,7 +29,7 @@ public class DomemasterSample : BehaviorBase
 #endif
     }
 
-    protected override void Connect()
+    protected override void Connect(string connectionId)
     {
         _ = Task.Run(() =>
         {
@@ -43,7 +42,8 @@ public class DomemasterSample : BehaviorBase
                     var accessToken = JwtAccessToken.CreateAccessToken(
                         ClientSecret,
                         RoomId,
-                        new RoomSpec(RoomSpec.Type.Sfu, BitrateReservationMbps));
+                        "WinUnityDomemaster",
+                        new RoomSpec());
 
                     var videoCodec = CodecUtil.IsH264Supported()
                         ? SendingVideoOption.VideoCodecType.H264
@@ -72,7 +72,7 @@ public class DomemasterSample : BehaviorBase
         {
         }
 
-        public override void OnAddLocalTrack(MediaStreamTrack mediaStreamTrack, MediaStream stream)
+        public override void OnAddLocalTrack(LSAddLocalTrackEvent lSAddLocalTrackEvent)
         {
             // LocalTrack の映像描画は省略
         }

@@ -494,12 +494,12 @@ public class LiveStreaming : MonoBehaviour
             this.app = app;
         }
 
-        public void OnConnecting()
+        public void OnConnecting(LSConnectingEvent lSConnectingEvent)
         {
             Logger.Debug("OnConnecting");
         }
 
-        public void OnOpen()
+        public void OnOpen(LSOpenEvent lSOpenEvent)
         {
             Logger.Debug("OnOpen");
 
@@ -512,13 +512,13 @@ public class LiveStreaming : MonoBehaviour
             }
         }
 
-        public void OnClosing()
+        public void OnClosing(LSClosingEvent lSClosingEvent)
         {
             Logger.Debug("OnClosing");
             app.SetConnectButtonText("Disconnecting...");
         }
 
-        public void OnClosed()
+        public void OnClosed(LSCloseEvent lSCloseEvent)
         {
             Logger.Debug("OnClosed()");
 
@@ -541,23 +541,27 @@ public class LiveStreaming : MonoBehaviour
             }
         }
 
-        public void OnAddLocalTrack(MediaStreamTrack mediaStreamTrack, MediaStream stream)
+        public void OnAddLocalTrack(LSAddLocalTrackEvent lSAddLocalTrackEvent)
         {
+            var mediaStreamTrack = lSAddLocalTrackEvent.MediaStreamTrack;
             Logger.Debug($"OnAddLocalTrack({mediaStreamTrack.Id})");
         }
 
-        public void OnAddRemoteConnection(string connectionId, Dictionary<string, object> metadata)
+        public void OnAddRemoteConnection(LSAddRemoteConnectionEvent lSAddRemoteConnectionEvent)
         {
+            var connectionId = lSAddRemoteConnectionEvent.ConnectionId;
             Logger.Debug($"OnAddRemoteConnection(connectionId = {connectionId})");
         }
 
-        public void OnUpdateRemoteConnection(string connectionId, Dictionary<string, object> metadata)
+        public void OnUpdateRemoteConnection(LSUpdateRemoteConnectionEvent lSUpdateRemoteConnectionEvent)
         {
+            var connectionId = lSUpdateRemoteConnectionEvent.ConnectionId;
             Logger.Debug($"OnUpdateRemoteConnection(connectionId = {connectionId})");
         }
 
-        public void OnRemoveRemoteConnection(string connectionId, Dictionary<string, object> metadata, List<MediaStreamTrack> mediaStreamTracks)
+        public void OnRemoveRemoteConnection(LSRemoveRemoteConnectionEvent lSRemoveRemoteConnectionEvent)
         {
+            var connectionId = lSRemoveRemoteConnectionEvent.ConnectionId;
             Logger.Debug($"OnRemoveRemoteConnection(connectionId = {connectionId})");
 
             app.videoRenderManager.RemoveRemoteTrack(connectionId);
@@ -571,8 +575,13 @@ public class LiveStreaming : MonoBehaviour
             }
         }
 
-        public void OnAddRemoteTrack(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, Dictionary<string, object> metadata, MuteType muteType)
+        public void OnAddRemoteTrack(LSAddRemoteTrackEvent lSAddRemoteTrackEvent)
         {
+            var connectionId = lSAddRemoteTrackEvent.ConnectionId;
+            var stream = lSAddRemoteTrackEvent.Stream;
+            var mediaStreamTrack = lSAddRemoteTrackEvent.MediaStreamTrack;
+            var metadata = lSAddRemoteTrackEvent.Metadata;
+            var muteType = lSAddRemoteTrackEvent.MuteType;
             Logger.Debug($"OnAddRemoteTrack(connectionId = {connectionId}, streamId = {stream.Id}, trackId = {mediaStreamTrack.Id}, muteType = {muteType})");
 
             if (mediaStreamTrack is VideoTrack videoTrack)
@@ -581,18 +590,27 @@ public class LiveStreaming : MonoBehaviour
             }
         }
 
-        public void OnUpdateRemoteTrack(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, Dictionary<string, object> metadata)
+        public void OnUpdateRemoteTrack(LSUpdateRemoteTrackEvent lSUpdateRemoteTrackEvent)
         {
+            var connectionId = lSUpdateRemoteTrackEvent.ConnectionId;
+            var stream = lSUpdateRemoteTrackEvent.Stream;
+            var mediaStreamTrack = lSUpdateRemoteTrackEvent.MediaStreamTrack;
             Logger.Debug($"OnUpdateRemoteTrack(connectionId = {connectionId}, streamId = {stream.Id}, trackId = {mediaStreamTrack.Id})");
         }
 
-        public void OnUpdateMute(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, MuteType muteType)
+        public void OnUpdateMute(LSUpdateMuteEvent lSUpdateMuteEvent)
         {
+            var connectionId = lSUpdateMuteEvent.ConnectionId;
+            var stream = lSUpdateMuteEvent.Stream;
+            var mediaStreamTrack = lSUpdateMuteEvent.MediaStreamTrack;
+            var muteType = lSUpdateMuteEvent.MuteType;
             Logger.Debug($"OnUpdateMute(connectionId = {connectionId}, streamId = {stream.Id}, trackId = {mediaStreamTrack.Id}, muteType = {muteType})");
         }
 
-        public void OnChangeStability(string connectionId, Stability stability)
+        public void OnChangeStability(LSChangeStabilityEvent lSChangeStabilityEvent)
         {
+            var connectionId = lSChangeStabilityEvent.ConnectionId;
+            var stability = lSChangeStabilityEvent.Stability;
             Logger.Debug($"OnChangeStability(connectionId = {connectionId}, stability = {stability})");
         }
 

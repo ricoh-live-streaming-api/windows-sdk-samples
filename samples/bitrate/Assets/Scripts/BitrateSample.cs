@@ -93,9 +93,9 @@ public class BitrateSample : BehaviorBase
         }, null);
     }
 
-    protected override void Connect()
+    protected override void Connect(string _)
     {
-        base.Connect();
+        base.Connect("WinUnityAPISamplesBitrate");
         maxBitrateKbpsConnected = MaxBitrateKbps;
     }
 
@@ -109,9 +109,9 @@ public class BitrateSample : BehaviorBase
             this.app = app;
         }
 
-        public override void OnOpen()
+        public override void OnOpen(LSOpenEvent lSOpenEvent)
         {
-            base.OnOpen();
+            base.OnOpen(lSOpenEvent);
             app.SetErrorNotification(false);
             app.SetVideoSendBitrateChangeButtonEnabled(true);
 
@@ -121,9 +121,9 @@ public class BitrateSample : BehaviorBase
             lastErrorCode = 0;
         }
 
-        public override void OnClosing()
+        public override void OnClosing(LSClosingEvent lSClosingEvent)
         {
-            base.OnClosing();
+            base.OnClosing(lSClosingEvent);
             app.SetVideoSendBitrateChangeButtonEnabled(false);
 
             if (lastErrorCode == invalidMaxBitrateKBPSOnChangeVideoSendBitrate)

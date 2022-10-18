@@ -10,6 +10,8 @@ public class RoomSpec
     {
         [EnumMember(Value = "sfu")]
         Sfu,
+        [EnumMember(Value = "sfu_large")]
+        SfuLarge,
         [EnumMember(Value = "p2p")]
         P2p,
         [EnumMember(Value = "p2p_turn")]
@@ -17,9 +19,9 @@ public class RoomSpec
     }
 
     private readonly Type type;
-    private readonly int? bitrateReservationMbps;
+    private readonly int bitrateReservationMbps;
 
-    public RoomSpec(Type type = Type.Sfu, int? bitrateReservationMbps = null)
+    public RoomSpec(Type type = Type.Sfu, int bitrateReservationMbps = 25)
     {
         this.type = type;
         this.bitrateReservationMbps = bitrateReservationMbps;
@@ -29,13 +31,9 @@ public class RoomSpec
     {
         var dic = new Dictionary<string, object>
         {
-            ["type"] = type
+            ["type"] = type,
+            ["media_control"] = new Dictionary<string, object>() { ["bitrate_reservation_mbps"] = bitrateReservationMbps }
         };
-
-        if (bitrateReservationMbps.HasValue)
-        {
-            dic.Add("media_control", new Dictionary<string, object>() { ["bitrate_reservation_mbps"] = bitrateReservationMbps });
-        }
 
         return dic;
     }

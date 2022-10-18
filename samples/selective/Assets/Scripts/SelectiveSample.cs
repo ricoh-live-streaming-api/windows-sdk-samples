@@ -37,6 +37,11 @@ public class SelectiveSample : BehaviorBase
         }, null);
     }
 
+    protected override void Connect(string _)
+    {
+        base.Connect("WinUnityAPISamplesSelective");
+    }
+
     private class ClientListener : ClientListenerBase
     {
         public ClientListener(SelectiveSample app) : base(app)

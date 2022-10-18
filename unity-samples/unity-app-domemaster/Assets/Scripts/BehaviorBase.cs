@@ -138,7 +138,7 @@ public abstract class BehaviorBase : MonoBehaviour
     /// <summary>
     /// Client接続処理
     /// </summary>
-    protected virtual void Connect()
+    protected virtual void Connect(string connectionId = "")
     {
         _ = Task.Run(() =>
         {
@@ -150,7 +150,7 @@ public abstract class BehaviorBase : MonoBehaviour
 
                     SetDevice();
 
-                    var accessToken = JwtAccessToken.CreateAccessToken(ClientSecret, RoomId, new RoomSpec());
+                    var accessToken = JwtAccessToken.CreateAccessToken(ClientSecret, RoomId, connectionId, new RoomSpec());
 
                     var constraints = new MediaStreamConstraints()
                         .SetAudio(IsAudioEnabled);
@@ -302,8 +302,11 @@ public abstract class BehaviorBase : MonoBehaviour
             this.app = app;
         }
 
-        public virtual void OnAddLocalTrack(MediaStreamTrack mediaStreamTrack, MediaStream stream)
+        public virtual void OnAddLocalTrack(LSAddLocalTrackEvent lSAddLocalTrackEvent)
         {
+            var mediaStreamTrack = lSAddLocalTrackEvent.MediaStreamTrack;
+            var stream = lSAddLocalTrackEvent.Stream;
+
             Logger.Debug($"streamId={stream.Id}, trackType={mediaStreamTrack.Type}, trackId={mediaStreamTrack.Id}");
 
             if (mediaStreamTrack is VideoTrack videoTrack)
@@ -313,12 +316,18 @@ public abstract class BehaviorBase : MonoBehaviour
             }
         }
 
-        public virtual void OnAddRemoteConnection(string connectionId, Dictionary<string, object> metadata)
+        public virtual void OnAddRemoteConnection(LSAddRemoteConnectionEvent lSAddRemoteConnectionEvent)
         {
         }
 
-        public virtual void OnAddRemoteTrack(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, Dictionary<string, object> metadata, MuteType muteType)
+        public virtual void OnAddRemoteTrack(LSAddRemoteTrackEvent lSAddRemoteTrackEvent)
         {
+            var connectionId = lSAddRemoteTrackEvent.ConnectionId;
+            var stream = lSAddRemoteTrackEvent.Stream;
+            var mediaStreamTrack = lSAddRemoteTrackEvent.MediaStreamTrack;
+            var metadata = lSAddRemoteTrackEvent.Metadata;
+            var muteType = lSAddRemoteTrackEvent.MuteType;
+
             Logger.Debug($"connectionId={connectionId}, streamId={stream.Id}, trackType={mediaStreamTrack.Type}, trackId={mediaStreamTrack.Id}, muteType={muteType}");
 
             if (mediaStreamTrack is VideoTrack videoTrack)
@@ -332,7 +341,7 @@ public abstract class BehaviorBase : MonoBehaviour
             }
         }
 
-        public virtual void OnClosed()
+        public virtual void OnClosed(LSCloseEvent lSCloseEvent)
         {
             app.UnityUIContext.Post(__ =>
             {
@@ -347,7 +356,7 @@ public abstract class BehaviorBase : MonoBehaviour
             app.SetConnectButtonText("Connect", true);
         }
 
-        public virtual void OnClosing()
+        public virtual void OnClosing(LSClosingEvent lSClosingEvent)
         {
             app.SetConnectButtonText("Disconnecting...", false);
 
@@ -357,7 +366,7 @@ public abstract class BehaviorBase : MonoBehaviour
             app.RemoteConnections.Clear();
         }
 
-        public virtual void OnConnecting()
+        public virtual void OnConnecting(LSConnectingEvent lSConnectingEvent)
         {
         }
 
@@ -366,13 +375,15 @@ public abstract class BehaviorBase : MonoBehaviour
             Logger.Debug($"{error.ToReportString()}");
         }
 
-        public virtual void OnOpen()
+        public virtual void OnOpen(LSOpenEvent lSOpenEvent)
         {
             app.SetConnectButtonText("Disconnect", true);
         }
 
-        public virtual void OnRemoveRemoteConnection(string connectionId, Dictionary<string, object> metadata, List<MediaStreamTrack> mediaStreamTracks)
+        public virtual void OnRemoveRemoteConnection(LSRemoveRemoteConnectionEvent lSRemoveRemoteConnectionEvent)
         {
+            var connectionId = lSRemoveRemoteConnectionEvent.ConnectionId;
+
             Logger.Debug($"connectionId={connectionId}");
 
             if (app.RemoteConnections.TryRemove(connectionId, out var _))
@@ -394,23 +405,37 @@ public abstract class BehaviorBase : MonoBehaviour
             }
         }
 
-        public virtual void OnUpdateRemoteTrack(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, Dictionary<string, object> metadata)
+        public virtual void OnUpdateRemoteTrack(LSUpdateRemoteTrackEvent lSUpdateRemoteTrackEvent)
         {
+            var connectionId = lSUpdateRemoteTrackEvent.ConnectionId;
+            var stream = lSUpdateRemoteTrackEvent.Stream;
+            var mediaStreamTrack = lSUpdateRemoteTrackEvent.MediaStreamTrack;
+
             Logger.Debug($"connectionId={connectionId}, streamId={stream.Id}, trackType={mediaStreamTrack.Type}, trackId={mediaStreamTrack.Id}");
         }
 
-        public virtual void OnUpdateMute(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, MuteType muteType)
+        public virtual void OnUpdateMute(LSUpdateMuteEvent lSUpdateMuteEvent)
         {
+            var connectionId = lSUpdateMuteEvent.ConnectionId;
+            var stream = lSUpdateMuteEvent.Stream;
+            var mediaStreamTrack = lSUpdateMuteEvent.MediaStreamTrack;
+            var muteType = lSUpdateMuteEvent.MuteType;
+
             Logger.Debug($"connectionId={connectionId}, streamId={stream.Id}, trackType={mediaStreamTrack.Type}, trackId={mediaStreamTrack.Id}, muteType={muteType}");
         }
 
-        public virtual void OnUpdateRemoteConnection(string connectionId, Dictionary<string, object> metadata)
+        public virtual void OnUpdateRemoteConnection(LSUpdateRemoteConnectionEvent lSUpdateRemoteConnectionEvent)
         {
+            var connectionId = lSUpdateRemoteConnectionEvent.ConnectionId;
+
             Logger.Debug($"connectionId={connectionId}");
         }
 
-        public virtual void OnChangeStability(string connectionId, Stability stability)
+        public virtual void OnChangeStability(LSChangeStabilityEvent lSChangeStabilityEvent)
         {
+            var connectionId = lSChangeStabilityEvent.ConnectionId;
+            var stability = lSChangeStabilityEvent.Stability;
+
             Logger.Debug($"connectionId={connectionId}, stability={stability}");
         }
     }

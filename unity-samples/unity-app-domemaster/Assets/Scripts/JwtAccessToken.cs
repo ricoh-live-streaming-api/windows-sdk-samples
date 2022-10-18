@@ -11,10 +11,11 @@ public static class JwtAccessToken
     public static string CreateAccessToken(
         string clientSecret,
         string roomId,
+        string connectionId,
         RoomSpec roomSpec)
     {
         byte[] guid = Guid.NewGuid().ToByteArray();
-        string connectionId = Convert.ToBase64String(guid, 0, guid.Length)
+        string randomId = Convert.ToBase64String(guid, 0, guid.Length)
             .Replace("=", "")
             .Replace("+", "")
             .Replace("/", "");
@@ -27,7 +28,7 @@ public static class JwtAccessToken
             .WithSecret(clientSecret)
             .AddClaim("nbf", nbf.ToUnixTimeSeconds())
             .AddClaim("exp", exp.ToUnixTimeSeconds())
-            .AddClaim("connection_id", "WIN" + connectionId)
+            .AddClaim("connection_id", connectionId + randomId)
             .AddClaim("room_id", roomId)
             .AddClaim("room_spec", roomSpec.GetSpec())
             .Encode();

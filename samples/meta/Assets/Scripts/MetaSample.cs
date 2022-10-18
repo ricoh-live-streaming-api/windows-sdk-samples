@@ -1,3 +1,4 @@
+using com.ricoh.livestreaming;
 using com.ricoh.livestreaming.webrtc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -94,6 +95,11 @@ public class MetaSample : BehaviorBase
         ClearRemoteMetadata();
     }
 
+    protected override void Connect(string _)
+    {
+        base.Connect("WinUnityAPISamplesMeta");
+    }
+
     private class ClientListener : ClientListenerBase
     {
         private new readonly MetaSample app;
@@ -103,15 +109,15 @@ public class MetaSample : BehaviorBase
             this.app = app;
         }
 
-        public override void OnClosing()
+        public override void OnClosing(LSClosingEvent lSClosingEvent)
         {
-            base.OnClosing();
+            base.OnClosing(lSClosingEvent);
             app.ClearRemoteMetadata();
         }
 
-        public override void OnRemoveRemoteConnection(string connectionId, Dictionary<string, object> metadata, List<MediaStreamTrack> mediaStreamTracks)
+        public override void OnRemoveRemoteConnection(LSRemoveRemoteConnectionEvent lSRemoveRemoteConnectionEvent)
         {
-            base.OnRemoveRemoteConnection(connectionId, metadata, mediaStreamTracks);
+            base.OnRemoveRemoteConnection(lSRemoveRemoteConnectionEvent);
 
             if (app.RemoteConnections.IsEmpty)
             {
@@ -119,9 +125,13 @@ public class MetaSample : BehaviorBase
             }
         }
 
-        public override void OnUpdateRemoteTrack(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, Dictionary<string, object> metadata)
+        public override void OnUpdateRemoteTrack(LSUpdateRemoteTrackEvent lSUpdateRemoteTrackEvent)
         {
-            base.OnUpdateRemoteTrack(connectionId, stream, mediaStreamTrack, metadata);
+            var connectionId = lSUpdateRemoteTrackEvent.ConnectionId;
+            var mediaStreamTrack = lSUpdateRemoteTrackEvent.MediaStreamTrack;
+            var metadata = lSUpdateRemoteTrackEvent.Metadata;
+
+            base.OnUpdateRemoteTrack(lSUpdateRemoteTrackEvent);
 
             if (app.RemoteVideoRender?.ConnectionId == connectionId)
             {
@@ -140,9 +150,12 @@ public class MetaSample : BehaviorBase
             }
         }
 
-        public override void OnUpdateRemoteConnection(string connectionId, Dictionary<string, object> metadata)
+        public override void OnUpdateRemoteConnection(LSUpdateRemoteConnectionEvent lSUpdateRemoteConnectionEvent)
         {
-            base.OnUpdateRemoteConnection(connectionId, metadata);
+            var connectionId = lSUpdateRemoteConnectionEvent.ConnectionId;
+            var metadata = lSUpdateRemoteConnectionEvent.Metadata;
+
+            base.OnUpdateRemoteConnection(lSUpdateRemoteConnectionEvent);
 
             if (app.RemoteVideoRender?.ConnectionId == connectionId)
             {

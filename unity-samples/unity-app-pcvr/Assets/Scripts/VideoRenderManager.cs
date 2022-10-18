@@ -62,7 +62,13 @@ public class VideoRenderManager
         lock (_lock)
         {
             bool isShowing = IsShowing(connectionId);
-            remoteTrackMap.Remove(connectionId);
+
+            if (remoteTrackMap.TryGetValue(connectionId, out var videoTrackLocal))
+            {
+                videoTrackLocal.Hide();
+                remoteTrackMap.Remove(connectionId);
+            }
+
             if (isShowing && remoteTrackMap.Count >= 1)
             {
                 var videoLocal = remoteTrackMap.First().Value;

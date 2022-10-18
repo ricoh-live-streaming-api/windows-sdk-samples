@@ -84,6 +84,11 @@ public class MuteSample : BehaviorBase
         ClearRemoteMuteStats();
     }
 
+    protected override void Connect(string _)
+    {
+        base.Connect("WinUnityAPISamplesMute");
+    }
+
     private class ClientListener : ClientListenerBase
     {
         private new readonly MuteSample app;
@@ -92,15 +97,15 @@ public class MuteSample : BehaviorBase
         {
             this.app = app;
         }
-        public override void OnClosing()
+        public override void OnClosing(LSClosingEvent lSClosingEvent)
         {
-            base.OnClosing();
+            base.OnClosing(lSClosingEvent);
             app.ClearRemoteMuteStats();
         }
 
-        public override void OnRemoveRemoteConnection(string connectionId, Dictionary<string, object> metadata, List<MediaStreamTrack> mediaStreamTracks)
+        public override void OnRemoveRemoteConnection(LSRemoveRemoteConnectionEvent lSRemoveRemoteConnectionEvent)
         {
-            base.OnRemoveRemoteConnection(connectionId, metadata, mediaStreamTracks);
+            base.OnRemoveRemoteConnection(lSRemoveRemoteConnectionEvent);
 
             if (app.RemoteConnections.IsEmpty)
             {
@@ -108,9 +113,13 @@ public class MuteSample : BehaviorBase
             }
         }
 
-        public override void OnUpdateMute(string connectionId, MediaStream stream, MediaStreamTrack mediaStreamTrack, MuteType muteType)
+        public override void OnUpdateMute(LSUpdateMuteEvent lSUpdateMuteEvent)
         {
-            base.OnUpdateMute(connectionId, stream, mediaStreamTrack, muteType);
+            var connectionId = lSUpdateMuteEvent.ConnectionId;
+            var mediaStreamTrack = lSUpdateMuteEvent.MediaStreamTrack;
+            var muteType = lSUpdateMuteEvent.MuteType;
+
+            base.OnUpdateMute(lSUpdateMuteEvent);
 
             if (app.RemoteVideoRender?.ConnectionId == connectionId)
             {

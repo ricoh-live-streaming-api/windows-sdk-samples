@@ -50,5 +50,5 @@ At this moment, we provide API license agreement / software license agreement on
 |  Rotation  | 垂直角（チルト） | 水平角（パン） | 回転角（ロール） |    0 ～ 359    |
 
 ## 対応バージョン
-* Unity : 2020.3.14f1
-* windows-unity-sdk : v1.3.0
+* Unity : 2021.3.11f1
+* windows-unity-sdk : v2.0.0
