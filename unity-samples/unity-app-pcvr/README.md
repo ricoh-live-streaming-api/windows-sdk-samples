@@ -7,7 +7,7 @@ RICOH Live Streaming Client SDK for Windows を使用した Windows Unity PCVR �
 
 * サービスサイト: https://livestreaming.ricoh/
 * ソフトウェア開発者向けサイト: https://api.livestreaming.ricoh/
-* アカウント登録: https://livestreaming.ricoh/user_register.html
+* アカウント登録: https://console.livestreaming.mw.smart-integration.ricoh.com/login/register
 * ソフトウェア使用許諾契約書 : [Software License Agreement](../../SoftwareLicenseAgreement.txt)
 * NOTICE: This package includes SDK and sample application(s) for "RICOH Live Streaming Service".
 At this moment, we provide API license agreement / software license agreement only in Japanese.
