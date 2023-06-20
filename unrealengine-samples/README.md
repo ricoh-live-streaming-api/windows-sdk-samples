@@ -15,8 +15,7 @@ At this moment, we provide API license agreement / software license agreement on
 ## RICOH Live Streaming Client SDK for Windows Unreal Engine プラグイン
 サンプルアプリケーションでは RICOH Live Streaming Client SDK for Windows Unreal Engine プラグインを使用しています。  
 Unreal Engine プロジェクトへのプラグインの適用方法は、下記をご参照ください。
-* [プラグインの利用方法](https://github.com/ricoh-live-streaming-api/windows-sdk/tree/main/unreal_engine_plugin/LiveStreaming_ClientSDK
-)
+* [プラグインの利用方法](https://github.com/ricoh-live-streaming-api/windows-sdk/tree/main/unreal_engine_plugin)
 
 ## プロジェクト構成
 * [EquirectangularView](./EquirectangularView) 360度映像表示サンプル
